@@ -8,22 +8,27 @@ import com.ecotracker.app.R
 import com.ecotracker.app.databinding.ActivityMainBinding
 
 class MainActivity : AppCompatActivity() {
-    
+
     private lateinit var binding: ActivityMainBinding
-    
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-        
+
+        initBinding()
         setupNavigation()
     }
-    
+
+    private fun initBinding() {
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+    }
+
     private fun setupNavigation() {
         val navHostFragment = supportFragmentManager
-            .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+            .findFragmentById(R.id.nav_host_fragment) as? NavHostFragment
+            ?: return  // aq pra evitar crashar, seugndo a aula 
+
         val navController = navHostFragment.navController
-        
         binding.bottomNavigation.setupWithNavController(navController)
     }
 }
